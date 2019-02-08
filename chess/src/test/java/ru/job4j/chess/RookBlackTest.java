@@ -1,0 +1,29 @@
+package ru.job4j.chess;
+
+import org.junit.Test;
+import ru.job4j.chess.firuges.Cell;
+import ru.job4j.chess.firuges.black.RookBlack;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+/**
+ *
+ * @author Maxim Yunusov (cortezzz1987@gmail.com)
+ * @version $Id$
+ * @since 0.1
+ */
+public class RookTest {
+    @Test
+    public void whenSource1And1Dest1And5() {
+        RookBlack rook = new RookBlack(Cell.H8);
+        Cell[] steps = rook.way(Cell.H8, Cell.H5);
+        assertThat(steps, is(new Cell[] {Cell.H7, Cell.H6, Cell.H5}));
+    }
+
+    @Test
+    public void whenCopyToC4() {
+        RookBlack rook = new RookBlack(Cell.H5);
+        RookBlack rookNew = new RookBlack(Cell.C4);
+        assertThat(rook.copy(Cell.C4).position(), is(rookNew.position()));
+    }
+}
