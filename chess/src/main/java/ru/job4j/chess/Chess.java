@@ -17,6 +17,13 @@ import ru.job4j.chess.firuges.Figure;
 import ru.job4j.chess.firuges.black.*;
 import ru.job4j.chess.firuges.white.*;
 
+/**
+ * //TODO add comments.
+ *
+ * @author Maxim Yunusov (cortezzz1987@gmail.com)
+ * @version $Id$
+ * @since 0.1
+ */
 public class Chess extends Application {
     private static final String JOB4J = "Шахматы на www.job4j.ru";
     private final int size = 8;
@@ -125,7 +132,7 @@ public class Chess extends Application {
         this.add(new RookBlack(Cell.A8), grid);
         this.add(new KnightBlack(Cell.B8), grid);
         this.add(new BishopBlack(Cell.C8), grid);
-        this.add(new QeenBlack(Cell.D8), grid);
+        this.add(new QueenBlack(Cell.D8), grid);
         this.add(new KingBlack(Cell.E8), grid);
         this.add(new BishopBlack(Cell.F8), grid);
         this.add(new KnightBlack(Cell.G8), grid);
@@ -144,7 +151,7 @@ public class Chess extends Application {
         this.add(new RookWhite(Cell.A1), grid);
         this.add(new KnightWhite(Cell.B1), grid);
         this.add(new BishopWhite(Cell.C1), grid);
-        this.add(new QeenWhite(Cell.D1), grid);
+        this.add(new QueenWhite(Cell.D1), grid);
         this.add(new KingWhite(Cell.E1), grid);
         this.add(new BishopWhite(Cell.F1), grid);
         this.add(new KnightWhite(Cell.G1), grid);

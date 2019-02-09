@@ -9,13 +9,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 /**
- * //TODO add comments.
  *
- * @author Maxim Yunusov (cortezzz1987gmail.com)
+ * @author Maxim Yunusov (cortezzz1987@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public class KingTest {
+public class KingBlackTest {
     @Test
     public void whenSourceE8DestE7() {
         assertThat(new KingBlack(Cell.E8).way(Cell.E8, Cell.E7), is (new Cell[] {Cell.E7}));

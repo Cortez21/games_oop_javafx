@@ -7,13 +7,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 /**
- * //TODO add comments.
  *
- * @author Maxim Yunusov (cortezzz19872gmail.com)
+ * @author Maxim Yunusov (cortezzz1987@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public class BishopTest {
+public class BishopBlackTest {
     @Test
     public void whenPositionIsD5() {
         assertThat(new BishopBlack(Cell.D5).possibleWays(Cell.D5), is(new Cell[] {

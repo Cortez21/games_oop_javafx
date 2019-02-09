@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Maxim Yunusov (cortezzz19872gmail.com)
+ * @author Maxim Yunusov (cortezzz1987@gmail.com)
  * @version $Id$
  * @since 0.1
  */
-public class QeenBlack implements Figure {
+public class QueenBlack implements Figure {
     private final Cell position;
 
-    public QeenBlack(final Cell position) {
+    public QueenBlack(final Cell position) {
         this.position = position;
     }
 
@@ -167,6 +167,6 @@ public class QeenBlack implements Figure {
 
     @Override
     public Figure copy(Cell dest) {
-        return new QeenBlack(dest);
+        return new QueenBlack(dest);
     }
 }

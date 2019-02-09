@@ -5,7 +5,7 @@ import ru.job4j.chess.firuges.Figure;
 
 /**
  *
- * @author Petr Arsentev (parsentev@yandex.ru)
+ * @author Maxim Yunusov (cortezzz1987@gmail.com)
  * @version $Id$
  * @since 0.1
  */
@@ -23,7 +23,16 @@ public class KingBlack implements Figure {
 
     @Override
     public Cell[] way(Cell source, Cell dest) {
-        return new Cell[] { dest };
+        Cell[] result = new Cell[1];
+        if (dest.equals(Cell.getCell(source.x + 1, source.y))
+                || dest.equals(Cell.getCell(source.x, source.y + 1))
+                || dest.equals(Cell.getCell(source.x - 1, source.y))
+                || dest.equals(Cell.getCell(source.x, source.y - 1))) {
+            result[0] = dest;
+        } else {
+            result[0] = source;
+        }
+        return result;
     }
 
     @Override

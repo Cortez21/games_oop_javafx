@@ -1,5 +1,12 @@
 package ru.job4j.chess.firuges;
 
+/**
+ * //TODO add comments.
+ *
+ * @author Maxim Yunusov (cortezzz1987@gmail.com)
+ * @version $Id$
+ * @since 0.1
+ */
 public interface Figure {
     Cell position();
 
@@ -13,5 +20,6 @@ public interface Figure {
     }
 
     Figure copy(Cell dest);
+
 
 }

@@ -6,9 +6,9 @@ import ru.job4j.chess.firuges.Figure;
 import java.util.Optional;
 
 /**
- * //TODO add comments.
  *
- * @author Petr Arsentev (parsentev@yandex.ru)
+ *
+ * @author Maxim Yunusov (cortezzz1987@gmail.com)
  * @version $Id$
  * @since 0.1
  */
@@ -25,12 +25,54 @@ public class Logic {
         int index = this.findBy(source);
         if (index != -1) {
             Cell[] steps = this.figures[index].way(source, dest);
-            if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
+            System.out.print("Steps: ");
+            for (Cell cell : steps) {
+                System.out.print(cell);
+            }
+            System.out.println();
+            for (Figure figure : figures) {
+                if (figure.position().equals(source)) {
+                    System.out.println(figure.getClass().getSimpleName());
+                }
+            }
+
+            if (steps.length > 0 && steps[steps.length - 1].equals(dest) && allowedMove(steps, source, dest)) {
                 rst = true;
                 this.figures[index] = this.figures[index].copy(dest);
             }
+            System.out.println(new StringBuilder().append(rst).append(System.lineSeparator()));
         }
+        System.out.println("Index is " + index);
         return rst;
+    }
+
+    public boolean isKnight(Cell position, Cell dest) {
+        boolean result = false;
+        for (Figure figure : figures) {
+            if ((figure.position().equals(position) && figure.getClass().getSimpleName().equals("KnightBlack") && this.findBy(dest) == -1)
+            || figure.position().equals(position) && figure.getClass().getSimpleName().equals("KnightWhite") && this.findBy(dest) == -1) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    public boolean allowedMove(Cell[] steps, Cell source, Cell dest) {
+        boolean allow = false;
+        boolean hasFigures = false;
+        for (Figure figure : figures) {
+            for (Cell step : steps) {
+                if (step.equals(figure.position())) {
+                    hasFigures = true;
+                }
+            }
+        }
+        if (!hasFigures || isKnight(source, dest)){
+            allow = true;
+        }
+        System.out.println("HasFigures = " + hasFigures);
+        System.out.println("Allow is = " + allow);
+        return allow;
     }
 
     public void clean() {

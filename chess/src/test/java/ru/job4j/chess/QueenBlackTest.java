@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.is;
  * @version $Id$
  * @since 0.1
  */
-public class QueenTest {
+public class QueenBlackTest {
     @Test
     public void whenSourceIsD5() {
         ArrayList<Cell> list = new ArrayList<>();

@@ -23,7 +23,39 @@ public class RookBlack implements Figure {
 
     @Override
     public Cell[] way(Cell source, Cell dest) {
-        return new Cell[] { dest };
+        Cell[] steps = new Cell[] {source};
+        if (source.x == dest.x || source.y == dest.y) {
+            if (source.x == dest.x && dest.y > source.y) {
+                steps = new Cell[dest.y - source.y];
+                int a = 0;
+                for (int i = source.y + 1; i < dest.y + 1; i++) {
+                    steps[a] = Cell.getCell(source.x, i);
+                    a++;
+                }
+            } else if (source.x == dest.x && dest.y < source.y) {
+                steps = new Cell[source.y - dest.y];
+                int a = 0;
+                for (int i = source.y - 1; i > dest.y - 1; i--) {
+                    steps[a] = Cell.getCell(source.x, i);
+                    a++;
+                }
+            } else if (source.y == dest.y && dest.x > source.x) {
+                steps = new Cell[dest.x - source.x];
+                int a = 0;
+                for (int i = source.x + 1; i < dest.x + 1; i++) {
+                    steps[a] = Cell.getCell(i, source.y);
+                    a++;
+                }
+            } else if (source.y == dest.y && dest.x < source.x) {
+                steps = new Cell[source.x - dest.x];
+                int a = 0;
+                for (int i = source.x - 1; i > dest.x - 1; i--) {
+                    steps[a] = Cell.getCell(i, source.y);
+                    a++;
+                }
+            }
+        }
+        return steps;
     }
 
     @Override

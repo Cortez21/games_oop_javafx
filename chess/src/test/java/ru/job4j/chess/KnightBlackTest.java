@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class KnightTest {
+public class KnightBlackTest {
     @Test
     public void whenPositionIsD5() {
         ArrayList<Cell> possibleWays = new ArrayList<>();

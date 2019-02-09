@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.is;
  * @version $Id$
  * @since 0.1
  */
-public class PawnTest {
+public class PawnBlackTest {
     @Test
     public void whenSourceH7DestH6() {
         assertThat(new PawnBlack(Cell.H7).way(Cell.H7, Cell.H6), is(new Cell[] {Cell.H6}));

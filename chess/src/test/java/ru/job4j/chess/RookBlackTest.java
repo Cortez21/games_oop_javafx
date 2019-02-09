@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.is;
  * @version $Id$
  * @since 0.1
  */
-public class RookTest {
+public class RookBlackTest {
     @Test
     public void whenSource1And1Dest1And5() {
         RookBlack rook = new RookBlack(Cell.H8);
