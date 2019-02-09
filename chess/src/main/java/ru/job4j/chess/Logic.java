@@ -25,24 +25,12 @@ public class Logic {
         int index = this.findBy(source);
         if (index != -1) {
             Cell[] steps = this.figures[index].way(source, dest);
-            System.out.print("Steps: ");
-            for (Cell cell : steps) {
-                System.out.print(cell);
-            }
-            System.out.println();
-            for (Figure figure : figures) {
-                if (figure.position().equals(source)) {
-                    System.out.println(figure.getClass().getSimpleName());
-                }
-            }
 
             if (steps.length > 0 && steps[steps.length - 1].equals(dest) && allowedMove(steps, source, dest)) {
                 rst = true;
                 this.figures[index] = this.figures[index].copy(dest);
             }
-            System.out.println(new StringBuilder().append(rst).append(System.lineSeparator()));
         }
-        System.out.println("Index is " + index);
         return rst;
     }
 
