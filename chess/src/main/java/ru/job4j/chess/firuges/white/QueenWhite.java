@@ -1,9 +1,12 @@
 package ru.job4j.chess.firuges.white;
 
+import ru.job4j.chess.ImpossibleMoveException;
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
 
 import java.util.ArrayList;
+
+import static java.lang.Math.abs;
 
 /**
  *
@@ -18,153 +21,83 @@ public class QueenWhite implements Figure {
         this.position = position;
     }
 
+    /**
+     *
+     * @return position of current figure
+     */
     @Override
     public Cell position() {
         return this.position;
     }
 
+    /**
+     * Finding the way of this move and check the right of this way
+     * @param source start position of figure
+     * @param dest - finish position
+     * @return - array of steps on the board
+     * @throws ImpossibleMoveException
+     */
     @Override
-    public Cell[] way(Cell source, Cell dest) {
-        Cell[] result = new Cell[] {source};
-        for (Cell cell : possibleWays(source)) {
-            if (dest.equals(cell)) {
-                result = getSteps(source, dest);
+    public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
+        Cell[] result = null;
+        int deltaX = source.x - dest.x;
+        int deltaY = source.y - dest.y;
+        if (abs(deltaX) == abs(deltaY)) {
+            result = new Cell[abs(deltaX)];
+            int index = 0;
+            if (deltaX < 0 && deltaY < 0) {
+                for (int i = 1; i <= abs(deltaX); i++) {
+                    result[index++] = Cell.getCell(source.x + i, source.y + i);
+                }
+            } else if (deltaX > 0 && deltaY < 0) {
+                for (int i = 1; i <= abs(deltaX); i++) {
+                    result[index++] = Cell.getCell(source.x - i, source.y + i);
+                }
+            } else if (deltaX > 0 && deltaY > 0) {
+                for (int i = 1; i <= abs(deltaX); i++) {
+                    result[index++] = Cell.getCell(source.x - i, source.y - i);
+                }
+            } else if (deltaX < 0 && deltaY > 0) {
+                for (int i = 1; i <= abs(deltaX); i++) {
+                    result[index++] = Cell.getCell(source.x + i, source.y - i);
+                }
             }
-        }
+        } else if(source.x == dest.x || source.y == dest.y) {
+            if (source.x == dest.x && dest.y > source.y) {
+                result = new Cell[dest.y - source.y];
+                int a = 0;
+                for (int i = source.y + 1; i < dest.y + 1; i++) {
+                    result[a++] = Cell.getCell(source.x, i);
+                }
+            } else if (source.x == dest.x && dest.y < source.y) {
+                result = new Cell[source.y - dest.y];
+                int a = 0;
+                for (int i = source.y - 1; i > dest.y - 1; i--) {
+                    result[a++] = Cell.getCell(source.x, i);
+                }
+            } else if (source.y == dest.y && dest.x > source.x) {
+                result = new Cell[dest.x - source.x];
+                int a = 0;
+                for (int i = source.x + 1; i < dest.x + 1; i++) {
+                    result[a++] = Cell.getCell(i, source.y);
+                }
+            } else if (source.y == dest.y && dest.x < source.x) {
+                result = new Cell[source.x - dest.x];
+                int a = 0;
+                for (int i = source.x - 1; i > dest.x - 1; i--) {
+                    result[a++] = Cell.getCell(i, source.y);
+                }
+            }
+        } else throw new ImpossibleMoveException();
+
         return result;
-    }
-
-    public Cell[] getSteps(Cell source, Cell dest) {
-        int numOfSteps = getNumOfSteps(source, dest);
-        Cell[] result = new Cell[numOfSteps];
-        int index = 0;
-        if (source.x == dest.x && source.y > dest.y) {
-            for (int i = 1; i <= numOfSteps; i++) {
-                result[index++] = Cell.getCell(source.x, source.y - i);
-            }
-        } else if (source.x < dest.x && source.y > dest.y) {
-            for (int i = 1; i <= numOfSteps; i++) {
-                result[index++] = Cell.getCell(source.x + i, source.y - i);
-            }
-        } else if (source.x < dest.x && source.y == dest.y) {
-            for (int i = 1; i <= numOfSteps; i++) {
-                result[index++] = Cell.getCell(source.x + i, source.y);
-            }
-        } else if (source.x < dest.x && source.y < dest.y) {
-            for (int i = 1; i <= numOfSteps; i++) {
-                result[index++] = Cell.getCell(source.x + i, source.y + i);
-            }
-        } else if (source.x == dest.x && source.y < dest.y) {
-            for (int i = 1; i <= numOfSteps; i++) {
-                result[index++] = Cell.getCell(source.x, source.y + i);
-            }
-        } else if (source.x > dest.x && source.y < dest.y) {
-            for (int i = 1; i <= numOfSteps; i++) {
-                result[index++] = Cell.getCell(source.x - i, source.y + i);
-            }
-        } else if (source.x > dest.x && source.y == dest.y) {
-            for (int i = 1; i <= numOfSteps; i++) {
-                result[index++] = Cell.getCell(source.x - i, source.y);
-            }
-        } else if (source.x > dest.x && source.y > dest.y) {
-            for (int i = 1; i <= numOfSteps; i++) {
-                result[index++] = Cell.getCell(source.x - i, source.y - i);
-            }
-        }
-
-        return result;
-    }
-
-    public int getNumOfSteps(Cell source, Cell dest) {
-        int numOfSteps;
-        if (source.x == dest.x && source.y > dest.y) {
-            numOfSteps = source.y - dest.y;
-        } else if (source.x == dest.x && source.y < dest.y) {
-            numOfSteps = dest.y - source.y;
-        } else if (source.y == dest.y && source.x > dest.x) {
-            numOfSteps = source.x - dest.x;
-        } else if (source.y == dest.y && source.x < dest.x) {
-            numOfSteps = dest.x - source.x;
-        } else {
-            numOfSteps = Math.abs(source.x - dest.x);
-        }
-        return numOfSteps;
     }
 
     /**
-     * Check all possible ways for action
-     * @param source - source position of figure
-     * @return - array of all cells for possible action
+     * re-creating a new figure on the destination cell
+     * @param dest
+     * @return
      */
-    public ArrayList<Cell> possibleWays(Cell source) {
-        Cell[] possibleWays = new Cell[28];
-        ArrayList<Cell> result = new ArrayList<>();
-        int index = 0;
-        for (int i = 1; i < 8; i++) {
-            if (Cell.getCell(source.x+ i, source.y + i) != null) {
-                possibleWays[index++] = Cell.getCell(source.x + i, source.y+ i);
-            } else {
-                break;
-            }
-        }
-        for (int i = 1; i < 8; i++) {
-            if (Cell.getCell(source.x - i, source.y + i) != null) {
-                possibleWays[index++] = Cell.getCell(source.x - i, source.y + i);
-            } else {
-                break;
-            }
-        }
-        for (int i = 1; i < 8; i++) {
-            if (Cell.getCell(source.x - i, source.y - i) != null) {
-                possibleWays[index++] = Cell.getCell(source.x - i, source.y - i);
-            } else {
-                break;
-            }
-        }
-        for (int i = 1; i < 8; i++) {
-            if (Cell.getCell(source.x + i, source.y - i) != null) {
-                possibleWays[index++] = Cell.getCell(source.x + i, source.y - i);
-            } else {
-                break;
-            }
-        }
-        for (int i = 1; i < 8; i++) {
-            if (Cell.getCell(source.x, source.y - i) != null) {
-                possibleWays[index++] = Cell.getCell(source.x, source.y - i);
-            } else {
-                break;
-            }
-        }
-        for (int i = 1; i < 8; i++) {
-            if (Cell.getCell(source.x + i, source.y) != null) {
-                possibleWays[index++] = Cell.getCell(source.x + i, source.y);
-            } else {
-                break;
-            }
-        }
-        for (int i = 1; i < 8; i++) {
-            if (Cell.getCell(source.x, source.y + i) != null) {
-                possibleWays[index++] = Cell.getCell(source.x, source.y + i);
-            } else {
-                break;
-            }
-        }
-        for (int i = 1; i < 8; i++) {
-            if (Cell.getCell(source.x - i, source.y) != null) {
-                possibleWays[index++] = Cell.getCell(source.x - i, source.y);
-            } else {
-                break;
-            }
-        }
-        for (Cell cell : possibleWays) {
-            if (cell != null) {
-                result.add(cell);
-            }
-        }
-
-        return result;
-    }
-
     @Override
     public Figure copy(Cell dest) {
         return new QueenWhite(dest);

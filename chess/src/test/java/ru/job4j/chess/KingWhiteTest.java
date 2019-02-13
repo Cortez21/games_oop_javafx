@@ -16,12 +16,18 @@ import static org.hamcrest.Matchers.is;
  */
 public class KingWhiteTest {
     @Test
-    public void whenSourceE8DestE7() {
+    public void whenSourceE8DestE7() throws ImpossibleMoveException {
         assertThat(new KingWhite(Cell.E8).way(Cell.E8, Cell.E7), is (new Cell[] {Cell.E7}));
     }
 
     @Test
     public void whenSourceE8DestF7() {
-        assertThat(new KingWhite(Cell.E8).way(Cell.E8, Cell.F7), is (new Cell[] {Cell.E8}));
+        boolean isException = false;
+        try {
+            new KingWhite(Cell.E8).way(Cell.E8, Cell.F7);
+        } catch (ImpossibleMoveException e) {
+            isException = true;
+        }
+        assertThat(isException, is(true));
     }
 }

@@ -26,6 +26,12 @@ public enum Cell {
     }
 
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @return position of current figure taking from getting coordinates
+     */
     public static Cell getCell(int x, int y) {
         Cell result = null;
         for (Cell cell : Cell.values()) {

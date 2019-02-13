@@ -26,12 +26,17 @@ public class KnightBlackTest {
 
     @Test
     public void whenSourceD5DestH7() {
-        KnightBlack knight = new KnightBlack(Cell.D5);
-        assertThat(knight.way(Cell.D5, Cell.H7), is(new Cell[] {Cell.D5}));
+        boolean isException = false;
+        try {
+            new KnightBlack(Cell.D5).way(Cell.D5, Cell.H7);
+        } catch (ImpossibleMoveException e) {
+            isException = true;
+        }
+        assertThat(isException, is(true));
     }
 
     @Test
-    public void whenSourceG8DestF6() {
+    public void whenSourceG8DestF6() throws ImpossibleMoveException {
         KnightBlack knight = new KnightBlack(Cell.G8);
         assertThat(knight.way(Cell.G8, Cell.F6), is(new Cell[] {Cell.F6}));
     }

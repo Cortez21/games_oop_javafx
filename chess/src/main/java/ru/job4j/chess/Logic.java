@@ -3,8 +3,6 @@ package ru.job4j.chess;
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
 
-import java.util.Optional;
-
 /**
  *
  *
@@ -21,47 +19,48 @@ public class Logic {
     }
 
     public boolean move(Cell source, Cell dest) {
-        boolean rst = false;
+        boolean rst;
+        Cell[] steps;
         int index = this.findBy(source);
-        if (index != -1) {
-            Cell[] steps = this.figures[index].way(source, dest);
-
-            if (steps.length > 0 && steps[steps.length - 1].equals(dest) && allowedMove(steps, source, dest)) {
-                rst = true;
-                this.figures[index] = this.figures[index].copy(dest);
-            }
+        try {
+            steps = figures[findBy(source)].way(source, dest);
+        } catch (ImpossibleMoveException | ArrayIndexOutOfBoundsException e) {
+            return false;
         }
+
+        if (this.findBy(source) == -1 || !allow(steps, source, dest)) {
+            rst = false;
+        } else {
+            this.figures[index] = this.figures[index].copy(dest);
+            rst = true;
+        }
+
         return rst;
     }
 
-    public boolean isKnight(Cell position, Cell dest) {
+    public boolean allow(Cell[] steps, Cell source, Cell dest) {
         boolean result = false;
-        for (Figure figure : figures) {
-            if ((figure.position().equals(position) && figure.getClass().getSimpleName().equals("KnightBlack") && this.findBy(dest) == -1)
-            || figure.position().equals(position) && figure.getClass().getSimpleName().equals("KnightWhite") && this.findBy(dest) == -1) {
-                result = true;
+        boolean hasFigure = false;
+        boolean isKnight = false;
+        for (Cell step : steps) {
+            if (this.findBy(step) != -1) {
+                hasFigure = true;
             }
+        }
+        for (Figure figure : figures) {
+            if ((figure.position().equals(source) && figure.getClass().getSimpleName().equals("KnightBlack") && this.findBy(dest) == -1)
+                    || figure.position().equals(source) && figure.getClass().getSimpleName().equals("KnightWhite") && this.findBy(dest) == -1) {
+                isKnight = true;
+            }
+        }
+        if (!hasFigure || isKnight) {
+            result = true;
         }
         return result;
     }
 
-    public boolean allowedMove(Cell[] steps, Cell source, Cell dest) {
-        boolean allow = false;
-        boolean hasFigures = false;
-        for (Figure figure : figures) {
-            for (Cell step : steps) {
-                if (step.equals(figure.position())) {
-                    hasFigures = true;
-                }
-            }
-        }
-        if (!hasFigures || isKnight(source, dest)){
-            allow = true;
-        }
-        System.out.println("HasFigures = " + hasFigures);
-        System.out.println("Allow is = " + allow);
-        return allow;
-    }
+
+
 
     public void clean() {
         for (int position = 0; position != this.figures.length; position++) {

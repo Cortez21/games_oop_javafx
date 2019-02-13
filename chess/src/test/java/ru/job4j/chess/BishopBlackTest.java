@@ -13,27 +13,9 @@ import static org.hamcrest.Matchers.is;
  * @since 0.1
  */
 public class BishopBlackTest {
-    @Test
-    public void whenPositionIsD5() {
-        assertThat(new BishopBlack(Cell.D5).possibleWays(Cell.D5), is(new Cell[] {
-                Cell.E6,
-                Cell.F7,
-                Cell.G8,
-                Cell.C6,
-                Cell.B7,
-                Cell.A8,
-                Cell.C4,
-                Cell.B3,
-                Cell.A2,
-                Cell.E4,
-                Cell.F3,
-                Cell.G2,
-                Cell.H1
-        }));
-    }
 
     @Test
-    public void whenSourceC8DestH3() {
+    public void whenSourceC8DestH3() throws ImpossibleMoveException {
         assertThat(new BishopBlack(Cell.C8).way(Cell.C8,Cell.H3), is(new Cell[] {
                 Cell.D7,
                 Cell.E6,
@@ -41,5 +23,16 @@ public class BishopBlackTest {
                 Cell.G4,
                 Cell.H3
         }));
+    }
+
+    @Test
+    public void whenSourceD7DestH2() {
+        boolean isException = false;
+        try {
+            new BishopBlack(Cell.D7).way(Cell.D7, Cell.H2);
+        } catch (ImpossibleMoveException e) {
+            isException = true;
+        }
+        assertThat(isException, is(true));
     }
 }

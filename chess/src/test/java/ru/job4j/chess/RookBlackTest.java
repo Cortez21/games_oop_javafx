@@ -14,16 +14,20 @@ import static org.hamcrest.Matchers.is;
  */
 public class RookBlackTest {
     @Test
-    public void whenSource1And1Dest1And5() {
+    public void whenSource1And1Dest1And5() throws ImpossibleMoveException {
         RookBlack rook = new RookBlack(Cell.H8);
         Cell[] steps = rook.way(Cell.H8, Cell.H5);
         assertThat(steps, is(new Cell[] {Cell.H7, Cell.H6, Cell.H5}));
     }
 
     @Test
-    public void whenCopyToC4() {
-        RookBlack rook = new RookBlack(Cell.H5);
-        RookBlack rookNew = new RookBlack(Cell.C4);
-        assertThat(rook.copy(Cell.C4).position(), is(rookNew.position()));
+    public void whenSourceG6DestF3() {
+        boolean isException = false;
+        try {
+            new RookBlack(Cell.G6).way(Cell.G6, Cell.F3);
+        } catch (ImpossibleMoveException e) {
+            isException = true;
+        }
+        assertThat(isException, is(true));
     }
 }

@@ -15,13 +15,19 @@ import static org.hamcrest.Matchers.is;
  */
 public class PawnWhiteTest {
     @Test
-    public void whenSourceF2DestF3() {
+    public void whenSourceF2DestF3() throws ImpossibleMoveException {
         assertThat(new PawnWhite(Cell.F2).way(Cell.F2, Cell.F3), is(new Cell[] {Cell.F3}));
     }
 
     @Test
-    public void whenSourceB2DestB6() {
-        assertThat(new PawnWhite(Cell.B2).way(Cell.B2, Cell.B6), is(new Cell[] {Cell.B2}));
+    public void whenSourceB7DestB2() {
+        boolean isException = false;
+        try {
+            new PawnWhite(Cell.B7).way(Cell.B7, Cell.B2);
+        } catch (ImpossibleMoveException e) {
+            isException = true;
+        }
+        assertThat(isException, is(true));
     }
 
 }
