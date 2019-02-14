@@ -33,11 +33,11 @@ public enum Cell {
      * @return position of current figure taking from getting coordinates
      */
     public static Cell getCell(int x, int y) {
-        Cell result = null;
-        for (Cell cell : Cell.values()) {
-            if (x == cell.x && y == cell.y) {
-                result = cell;
-            }
+        Cell result;
+        try {
+            result = Cell.values()[x * 8 + y];
+        } catch (ArrayIndexOutOfBoundsException aiooe) {
+            result = null;
         }
         return result;
     }

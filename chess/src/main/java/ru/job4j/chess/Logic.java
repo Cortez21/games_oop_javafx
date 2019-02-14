@@ -18,7 +18,7 @@ public class Logic {
         this.figures[this.index++] = figure;
     }
 
-    public boolean move(Cell source, Cell dest) {
+    public boolean move(Cell source, Cell dest) throws FigureNotFoundException, OccupiedWayException {
         boolean rst;
         Cell[] steps;
         int index = this.findBy(source);
@@ -28,8 +28,12 @@ public class Logic {
             return false;
         }
 
-        if (this.findBy(source) == -1 || !allow(steps, source, dest)) {
+        if (this.findBy(source) == -1) {
             rst = false;
+            throw new FigureNotFoundException();
+        } else if (!allow(steps, source, dest)) {
+            rst = false;
+            throw new OccupiedWayException();
         } else {
             this.figures[index] = this.figures[index].copy(dest);
             rst = true;
